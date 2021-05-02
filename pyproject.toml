@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "repl_python3_Cobra-Bot"
+name = "Cobra_Bot_Replit"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Cobra Bot is a Discord Bot that helps you run Netrunner Tournaments using Discord."
+authors = ["Adam Stradomski <adam.stradomski@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"

@@ -6,10 +6,15 @@ from discord.ext import commands
 
 # This class supports all !time commands
 class TimeCommands(commands.Cog, name="Time - Helps you manage Round time using Cobra BOT"):
-    pass
-
+    """
+    Manage Netrunner Tournament Round time using Discord bot !time command  
+    """
     logger = logging.getLogger("TimeCommands")
 
+    """
+    Construct Command class and setup default values. 
+    Default round time 65 minutes. 
+    """
     def __init__(self, bot):
         self.bot = bot
 
@@ -22,8 +27,8 @@ class TimeCommands(commands.Cog, name="Time - Helps you manage Round time using 
         # Used to stop the round
         self._stop = False
 
-
-    def formatTime(self, seconds):
+    @staticmethod
+    def formatTime(seconds):
         """
         Returns properly formated string based on numer of minutes and seconds left. 
         ex. 
@@ -90,7 +95,7 @@ class TimeCommands(commands.Cog, name="Time - Helps you manage Round time using 
         self._round_start = clock.time()
         round_end = self._round_start + self._round_time
 
-        # confim on channel that timest was started.
+        # confim on channel that time was started.
         await ctx.send("Ok! Time started {}".format(
             self.formatTime(self._round_time)))
 

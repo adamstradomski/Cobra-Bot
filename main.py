@@ -9,16 +9,15 @@ from keep_alive import keep_alive
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('cobra_bot')
 
-# Get Discord Bot token from env variables. 
-cobratoken = os.environ['cobra.token']
-
 # Setup Bot
 bot = discord.ext.commands.Bot(
     command_prefix="!",
     description=
-    "Cobra Bot is an Netrunner Tournament Bot")
+    "Cobra Bot is a Discord Bot that helps you run Netrunner Tournamenst using Discord."
+)
 
-# On startup, log all servers you are connected to. 
+
+# On startup, log all servers you are connected to.
 @bot.event
 async def on_ready():
     logger.log(logging.INFO,
@@ -28,12 +27,18 @@ async def on_ready():
         logger.log(logging.INFO, guild.name)
         logger.log(logging.INFO, guild.owner)
 
+
 # Add support for !time commands
 bot.add_cog(TimeCommands(bot))
+# Add support for !cobra commands
 bot.add_cog(CobraCommands(bot))
 
-# Startup Web Server in separate thread, to keep alive bot in case there is no traffic in channels.
-keep_alive()  
+# This is for replit.com 
+# Startup Web Server in separate thread, to keep alive bot.
+# You still need to have a WebServer to be pinged externally. Check out  https://uptimerobot.com/
+keep_alive()
 
-# Startup Bot. 
-bot.run(cobratoken)
+# Create your Bot and get token from https://discord.com/developers/
+# Get Token from environment variables
+# Startup Bot
+bot.run(os.environ['discord_bot_token'])
