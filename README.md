@@ -29,7 +29,7 @@ run = "python main.py"
 ## Keep Alive Server
 To keep aliave your server after you close your browser window. Goto https://uptimerobot.com/ create account, and run monitor each 5 minutes to ping your webserver. 
 
-# Develop localy
+# Develop locally
 
 ## Installation 
 
