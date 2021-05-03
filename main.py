@@ -1,12 +1,12 @@
 import os
 import logging
 import discord
-from TimeCommand import TimeCommands
-from CobraCommand import CobraCommands
+from commands.TimeCommand import TimeCommand
+from commands.CobraCommand import CobraCommand
 from keep_alive import keep_alive
 
 # Setup logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('cobra_bot')
 
 # Setup Bot
@@ -29,16 +29,17 @@ async def on_ready():
 
 
 # Add support for !time commands
-bot.add_cog(TimeCommands(bot))
+bot.add_cog(TimeCommand(bot))
 # Add support for !cobra commands
-bot.add_cog(CobraCommands(bot))
+bot.add_cog(CobraCommand(bot))
 
-# This is for replit.com 
-# Startup Web Server in separate thread, to keep alive bot.
-# You still need to have a WebServer to be pinged externally. Check out  https://uptimerobot.com/
-keep_alive()
+if __name__ == "__main__":
+  # This is for replit.com 
+  # Startup Web Server in separate thread, to keep alive bot.
+  # You still need to have a WebServer to be pinged externally. Check out  https://uptimerobot.com/
+  keep_alive()
 
-# Create your Bot and get token from https://discord.com/developers/
-# Get Token from environment variables
-# Startup Bot
-bot.run(os.environ['discord_bot_token'])
+  # Create your Bot and get token from https://discord.com/developers/
+  # Get Token from environment variables
+  # Startup Bot
+  bot.run(os.environ['discord_bot_token'])

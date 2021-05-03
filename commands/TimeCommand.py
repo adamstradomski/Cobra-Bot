@@ -5,11 +5,11 @@ from discord.ext import commands
 
 
 # This class supports all !time commands
-class TimeCommands(commands.Cog, name="Time - Helps you manage Round time using Cobra BOT"):
+class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using Cobra BOT"):
     """
     Manage Netrunner Tournament Round time using Discord bot !time command  
     """
-    logger = logging.getLogger("TimeCommands")
+    logger = logging.getLogger("TimeCommand")
 
     """
     Construct Command class and setup default values. 
@@ -30,7 +30,7 @@ class TimeCommands(commands.Cog, name="Time - Helps you manage Round time using 
     @staticmethod
     def formatTime(seconds):
         """
-        Returns properly formated string based on numer of minutes and seconds left. 
+        Returns formated string based on numer of minutes and seconds left. 
         ex. 
         2 minutes 1 seconds
         2 minutes
@@ -38,21 +38,24 @@ class TimeCommands(commands.Cog, name="Time - Helps you manage Round time using 
         1 minute 
         5 seconds
         """
-        if seconds > 60:
-            min = int(seconds / 60)
-            sec = int(seconds % 60)
-            if min == 1:
-                if sec == 0:
-                    return "1 minute"
-                else:
-                    return "1 minute {:d} seconds".format(sec)
-            else:
-                if sec == 0:
-                    return "{:d} minutes".format(min)
-                else:
-                    return "{:d} minutes {:d} seconds".format(min, sec)
+        min = int(seconds / 60)
+        sec = int(seconds % 60)
+
+        if min == 1:
+          minutes = "1 minute "
+        elif min > 1: 
+          minutes = "{:d} minutes ".format(min)
+        else: 
+          minutes = ""
+
+        if sec == 1:
+          seconds = "1 second"
+        elif sec > 1:
+          seconds = "{:d} seconds".format(sec)
         else:
-            return "{:d} seconds".format(int(seconds))
+          seconds = ""
+
+        return (minutes+seconds).strip()
 
     @commands.group(pass_context=True)
     async def time(self, ctx):
