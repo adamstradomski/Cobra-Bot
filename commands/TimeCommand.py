@@ -17,15 +17,44 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
     """
     def __init__(self, bot):
         self.bot = bot
+        self.guilds = {} 
+        # Dictionary GuildID.ChannelID.Start
+        # Dictionary GuildID.ChannelID.Time
+        # Dictionary GuildID.ChannelID.Stop
 
-        # Start of the round in seconds since the start of time
-        self._round_start = 0
+    def getRound(self, ctx):
+        """ Get Round object for Guid and Channel """
+        if not self.guilds.get(ctx.guild.id):
+            self.guilds[ctx.guild.id] = {}
 
-        # Lenght of the round in seconds
-        self._round_time = 65 * 60
+        if not  self.guilds.get(ctx.guild.id).get(ctx.channel.id):
+            self.guilds[ctx.guild.id][ctx.channel.id] = {}
 
-        # Used to stop the round
-        self._stop = False
+        return self.guilds[ctx.guild.id][ctx.channel.id]
+
+    def getRoundTime(self, ctx) -> int:
+        """ Get Round object for Guid and Channel. Default 65 minutes """
+        return self.getRound(ctx).get("Time") or 65*60
+
+    def getRoundStart(self, ctx) -> int:
+        """ Get Round object for Guid and Channel. Default 0 """
+        return self.getRound(ctx).get("Start") or 0
+
+    def getRoundStop(self, ctx) -> bool:
+        """ Get Round object for Guid and Channel """
+        return self.getRound(ctx).get("Stop")
+
+    def updateRoundStop(self, ctx, val):
+        """ Get Round object for Guid and Channel """
+        return self.getRound(ctx).update({"Stop":val}) 
+
+    def updateRoundTime(self, ctx, val):
+        """ Get Round object for Guid and Channel """
+        return self.getRound(ctx).update({"Time":val}) 
+
+    def updateRoundStart(self, ctx, val):
+        """ Get Round object for Guid and Channel """
+        return self.getRound(ctx).update({"Start":val})                 
 
     @staticmethod
     def formatTime(seconds):
@@ -78,9 +107,9 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
         elif minutes > 120:
             await ctx.send("Nope! Maximum round time is 120 minutes.")
         else:
-            self._round_time = minutes * 60
+            self.getRound(ctx).update({"Time": minutes * 60})
             await ctx.send("Round time set to {}. To start the round use !time start.".format(
-                self.formatTime(self._round_time)))
+                self.formatTime(self.getRound(ctx).get("Time"))))
 
     # Bot command: !time_start
     # Start the timer with time set up up using !time_set command
@@ -89,25 +118,25 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
         """- Starts the round timer."""
         self.logger.log(logging.DEBUG, ctx.command)
 
-        if self._round_start > 0:
+        if self.getRoundStart(ctx) > 0:
             await ctx.send(
                 "If you want to start the rund. Please stop the current round first."
             )
             return
 
-        self._round_start = clock.time()
-        round_end = self._round_start + self._round_time
+        self.updateRoundStart(ctx, clock.time())
+        round_end = self.getRoundStart(ctx) + self.getRoundTime(ctx)
 
         # confim on channel that time was started.
         await ctx.send("Ok! Time started {}".format(
-            self.formatTime(self._round_time)))
+            self.formatTime(self.getRoundTime(ctx))))
 
         # loop sleep untill finished or break
         while clock.time() < round_end - 6:
-            if (self._stop):
+            if (self.getRoundStop(ctx)):
                 await ctx.send("Round finished.")
-                self._stop = False
-                self._round_start = 0
+                self.updateRoundStop(ctx,False)
+                self.updateRoundStart(ctx,0)
                 return
             await asyncio.sleep(1)
 
@@ -117,7 +146,7 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
             await ctx.send("Only {} left!".format(self.formatTime(x)))
             await asyncio.sleep(1)
 
-        self._round_start = 0
+        self.updateRoundStart(ctx,0)
         ## Finish round
         await ctx.send("""@here Time's up !!! Round ends. 
 Current player finishes his/her round and then opponent does the same.""")
@@ -131,13 +160,13 @@ Current player finishes his/her round and then opponent does the same.""")
         """- Bots replies with minutes and seconds untill end of the round."""
         self.logger.log(logging.DEBUG, ctx.command)
         
-        if self._round_start == 0:
+        if self.getRoundStart(ctx) == 0:
             await ctx.send(
                 "To show time - start the round first."
             )
             return             
 
-        time_left = self._round_time + self._round_start - clock.time()
+        time_left = self.getRoundTime(ctx) + self.getRoundStart(ctx) - clock.time()
         await ctx.send("Time left {}".format(self.formatTime(time_left)))
 
 
@@ -146,10 +175,10 @@ Current player finishes his/her round and then opponent does the same.""")
         """ - Stops the timer."""
         self.logger.log(logging.DEBUG, ctx.command)
 
-        if self._round_start == 0:
+        if self.getRoundStart(ctx) == 0:
             await ctx.send(
                 "To stop round - start the round first."
             )
             return        
 
-        self._stop = True
+        self.updateRoundStop(ctx, True)

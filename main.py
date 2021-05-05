@@ -6,7 +6,7 @@ from commands.CobraCommand import CobraCommand
 from keep_alive import keep_alive
 
 # Setup logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('cobra_bot')
 
 # Setup Bot
@@ -25,7 +25,6 @@ async def on_ready():
 
     for guild in bot.guilds:
         logger.log(logging.INFO, guild.name)
-        logger.log(logging.INFO, guild.owner)
 
 
 # Add support for !time commands

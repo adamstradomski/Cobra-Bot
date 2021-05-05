@@ -14,9 +14,7 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     def __init__(self, bot):
         self.bot = bot
-
-    # Dictionary GuildID.ChannelID.TournamentID
-    guilds = {}
+        self.guilds = {} # Dictionary GuildID.ChannelID.TournamentID
 
     def getTournamentId(self, ctx):
         """ Get current tournament ID provided by SET command.  """
