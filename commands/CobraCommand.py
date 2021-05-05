@@ -42,7 +42,7 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
             return True
         else:
             await ctx.send(
-                "!! Before using other commands, please set Tournament ID using !cobra set"
+                "Before using other commands, please set Tournament ID using !cobra set"
             )
             return False
 
@@ -103,7 +103,7 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     @cobra.command(name="standings")
     async def standings(self, ctx):
-        """Show current tournament standings. """
+        """Show tournament current standings. """
         data = self.getTournament(ctx)
         ranks, names, mps = "", "", ""
 
@@ -126,7 +126,7 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     @cobra.command(name="pairings")
     async def pairingsRound(self, ctx, round: int = -1):
-        """Show current tournament pairings. Latest round is default. """
+        """Show tournament current pairings. Use !cobra pairings {ROUND} to get pairings for specific round. """
         data = self.getTournament(ctx)
 
         # Create Dictionary PlayerID:PlayerName for pairings
@@ -164,7 +164,7 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     @cobra.command(name="stats")
     async def stats(self, ctx):
-        """Show the current tournament Corp and Runner ID statistics. """
+        """Show the tournament Corp ID and Runner ID statistics. """
         data = self.getTournament(ctx)
 
         cids = {}
