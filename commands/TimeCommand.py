@@ -5,7 +5,7 @@ from discord.ext import commands
 
 
 # This class supports all !time commands
-class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using Cobra BOT"):
+class TimeCommand(commands.Cog, name="Manage tournament time"):
     """
     Manage Netrunner Tournament Round time using Discord bot !time command  
     """
@@ -93,13 +93,13 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
         """
         pass
 
-    # Bot command: !time_set X
-    # Set the timer for the round.
-    # Minium time 5 minutes.
-    # Maximum time 120 minutes.
     @time.command(name="set")
     async def set(self, ctx, minutes: int):
-        """- Set the timer for new round accoring to paramter X (in minutes)"""
+        """Set the timer for new round accoring to parameter (in minutes)
+        Minium time 5 minutes.
+        Maximum time 120 minutes.
+        To set the time for 60 minutes: 
+        !time set 60"""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if minutes < 5:
@@ -111,11 +111,9 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
             await ctx.send("Round time set to {}. To start the round use !time start.".format(
                 self.formatTime(self.getRound(ctx).get("Time"))))
 
-    # Bot command: !time_start
-    # Start the timer with time set up up using !time_set command
     @time.command(name="start")
     async def start(self, ctx):
-        """- Start the round timer."""
+        """Start the round timer."""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if self.getRoundStart(ctx) > 0:
@@ -148,14 +146,14 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
 
         self.updateRoundStart(ctx,0)
         ## Finish round
-        await ctx.send("""@here Time's up !!! Round ends. 
+        await ctx.send("""Time's up !!! Round ends. @CobraTime 
 Current player finishes his/her round and then opponent does the same.""")
 
         self.logger.log(logging.INFO, "Time Stop")
 
     @time.command(name="show")
     async def show(self, ctx):
-        """- Show minutes and seconds until end of the round."""
+        """Show minutes and seconds until end of the round."""
         self.logger.log(logging.DEBUG, ctx.command)
         
         if self.getRoundStart(ctx) == 0:
@@ -167,10 +165,9 @@ Current player finishes his/her round and then opponent does the same.""")
         time_left = self.getRoundTime(ctx) + self.getRoundStart(ctx) - clock.time()
         await ctx.send("Time left {}".format(self.formatTime(time_left)))
 
-
     @time.command(name="stop")
     async def stop(self, ctx):
-        """ - Stop the round timer."""
+        """Stop the round timer."""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if self.getRoundStart(ctx) == 0:

@@ -13,7 +13,7 @@ logger = logging.getLogger('cobra_bot')
 bot = discord.ext.commands.Bot(
     command_prefix="!",
     description=
-    "Cobra Bot is a Discord Bot that helps you run Netrunner Tournamenst using Discord."
+    "Cobra Bot is a Discord Bot that helps you run Netrunner Tournaments using Discord!"
 )
 
 

@@ -51,8 +51,11 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     @cobra.command(name="set")
     async def set(self, ctx, id: str):
-        """Set the tournament id. Example: !cobra set http://cobr.ai/tournaments/2029
-         by either copy-past tournament URL (eg. http://cobr.ai/tournaments/2029) or the tournament ID for cobr.ai (eg. 2029) """
+        """Set the tournament,eg.: !cobra set http://cobr.ai/tournaments/2029
+        You can set the tournament by either copy-past tournament URL:
+        !cobra set  http://cobr.ai/tournaments/2029
+        or using the tournament id:
+        !cobra set 2029"""
 
         # extract tournament id from URL: http://cobr.ai/tournaments/2029 -> 2029
         id = id.strip().split("/")[-1]
@@ -124,7 +127,11 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     @cobra.command(name="pairings")
     async def pairingsRound(self, ctx, round: int = -1):
-        """Show tournament current pairings or for specific round. """
+        """Show tournament current pairings or for specific round.
+        To show parirings for the latest round:
+        !cobra pairings 
+        To show parirings for the second round:
+        !cobra pairings 2"""
         data = self.getTournament(ctx)
 
         # Create Dictionary PlayerID:PlayerName for pairings
