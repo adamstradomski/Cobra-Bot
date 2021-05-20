@@ -40,18 +40,18 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
             return True
         else:
             await ctx.send(
-                "Before using other commands, please set Tournament ID using !cobra set"
+                "Before using other commands, please set Tournament ID using !cobra set {tournament}"
             )
             return False
 
     @commands.group(pass_context=True, invoke_without_command=True)
     async def cobra(self, ctx):
-        """ set {ID} | set http://cobr.ai/tournaments/{ID} | show | standings | pairings | pairings {ROUND} | stats - !help cobra for more info"""
+        """ set {tournament}|show|standings|pairings|pairings {round}|stats"""
         await ctx.send("!help cobra for more info")
 
     @cobra.command(name="set")
     async def set(self, ctx, id: str):
-        """Sets the tournament id
+        """Set the tournament id. Example: !cobra set http://cobr.ai/tournaments/2029
          by either copy-past tournament URL (eg. http://cobr.ai/tournaments/2029) or the tournament ID for cobr.ai (eg. 2029) """
 
         # extract tournament id from URL: http://cobr.ai/tournaments/2029 -> 2029
@@ -124,7 +124,7 @@ class CobraCommand(commands.Cog, name="Cobr.AI Integration"):
 
     @cobra.command(name="pairings")
     async def pairingsRound(self, ctx, round: int = -1):
-        """Show tournament current pairings. Use !cobra pairings {ROUND} to get pairings for specific round. """
+        """Show tournament current pairings or for specific round. """
         data = self.getTournament(ctx)
 
         # Create Dictionary PlayerID:PlayerName for pairings
