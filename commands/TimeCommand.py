@@ -99,7 +99,7 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
     # Maximum time 120 minutes.
     @time.command(name="set")
     async def set(self, ctx, minutes: int):
-        """sets the timer for new round accoring to paramter X (in minutes) """
+        """sets the timer for new round accoring to paramter X (in minutes)"""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if minutes < 5:
@@ -153,11 +153,9 @@ Current player finishes his/her round and then opponent does the same.""")
 
         self.logger.log(logging.INFO, "Time Stop")
 
-    # Bot command: !time_show
-    # Bots replies with minutes and seconds untill end of the round.
     @time.command(name="show")
     async def show(self, ctx):
-        """- Bots replies with minutes and seconds untill end of the round."""
+        """- Bots replies with minutes and seconds until end of the round."""
         self.logger.log(logging.DEBUG, ctx.command)
         
         if self.getRoundStart(ctx) == 0:
