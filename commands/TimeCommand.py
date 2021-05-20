@@ -88,8 +88,8 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
 
     @commands.group(pass_context=True)
     async def time(self, ctx):
-        """
-        start|stop|show|set X - A set of commands to Start/Stop/Show/Set round timer.  
+        """start|stop|show|set {time_in_minutes}
+        A set of commands to Start/Stop/Show/Set round timer.  
         """
         pass
 
@@ -99,7 +99,7 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
     # Maximum time 120 minutes.
     @time.command(name="set")
     async def set(self, ctx, minutes: int):
-        """sets the timer for new round accoring to paramter X (in minutes)"""
+        """- Set the timer for new round accoring to paramter X (in minutes)"""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if minutes < 5:
@@ -115,7 +115,7 @@ class TimeCommand(commands.Cog, name="Time - Helps you manage Round time using C
     # Start the timer with time set up up using !time_set command
     @time.command(name="start")
     async def start(self, ctx):
-        """- Starts the round timer."""
+        """- Start the round timer."""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if self.getRoundStart(ctx) > 0:
@@ -155,7 +155,7 @@ Current player finishes his/her round and then opponent does the same.""")
 
     @time.command(name="show")
     async def show(self, ctx):
-        """- Bots replies with minutes and seconds until end of the round."""
+        """- Show minutes and seconds until end of the round."""
         self.logger.log(logging.DEBUG, ctx.command)
         
         if self.getRoundStart(ctx) == 0:
@@ -170,7 +170,7 @@ Current player finishes his/her round and then opponent does the same.""")
 
     @time.command(name="stop")
     async def stop(self, ctx):
-        """ - Stops the timer."""
+        """ - Stop the round timer."""
         self.logger.log(logging.DEBUG, ctx.command)
 
         if self.getRoundStart(ctx) == 0:
