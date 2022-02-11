@@ -18,7 +18,7 @@ I can integrate with Cobra.AI and I manage your round time directly from your di
 ## Invite Cobra Bot to your discord server
 You can ask your discord server administartor to invite me by giving this link:
 
-https://discord.com/api/oauth2/authorize?client_id=837045273128861727&permissions=19456&scope=bot
+https://discord.com/api/oauth2/authorize?client_id=837045273128861727&permissions=1099780131904&scope=bot
 
 Please keep in mind that there is no guarantee I will work. Please report any issues on github.
 
