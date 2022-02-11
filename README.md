@@ -46,10 +46,11 @@ language = "python3"
 run = "python main.py"
 ```
 2. Setup environment variable discord_bot_token
-3. Click Run
+3. Duplicate file config.example.py, rename the copy to config.py and adjust configuration inside as needed
+4. Click Run
 
 ## Keep Alive Server
-To keep aliave your server after you close your browser window. Goto https://uptimerobot.com/ create account, and run monitor each 5 minutes to ping your webserver. 
+To keep alive your server after you close your browser window. Goto https://uptimerobot.com/ create account, and run monitor each 5 minutes to ping your webserver. 
 
 ## B) Install & Run locally
 
